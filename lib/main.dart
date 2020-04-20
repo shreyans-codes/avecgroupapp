@@ -1,3 +1,4 @@
+import 'package:avecgroupapp/ui/ourTheme.dart';
 import 'package:flutter/material.dart';
 import 'screens/login/login.dart';
 void main() {
@@ -9,6 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: OurTheme().buildTheme(),
       home: LogIn(),
     );
   }
