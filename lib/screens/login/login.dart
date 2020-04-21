@@ -1,4 +1,5 @@
 import 'package:avecgroupapp/screens/login/loginForm.dart';
+import 'package:avecgroupapp/screens/signup/signup.dart';
 import 'package:avecgroupapp/ui/colors.dart';
 import 'package:avecgroupapp/ui/textStyles.dart';
 import 'package:flutter/gestures.dart';
@@ -66,7 +67,7 @@ class LogIn extends StatelessWidget {
                           TextSpan(text: "Sign Up", style: signUpStyleLink,
                           recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            print("That Tickles!");
+                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => SignUp()));
                           }),
                         ],
                       )),
