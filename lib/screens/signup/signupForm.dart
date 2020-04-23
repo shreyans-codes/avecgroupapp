@@ -22,13 +22,17 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
   void _signUpUser(String email, String password, BuildContext context) async {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
 
+    String _returnString = await _currentUser.signUpUser(email, password);
+
     try {
-      if (await _currentUser.signUpUser(email, password)) {
+      if (_returnString == "success") {
         Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) => JOCG()));
       }
     } catch (e) {
-      print(e);
+      Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text(_returnString),
+                  duration: Duration(seconds: 2)));
     }
   }
 

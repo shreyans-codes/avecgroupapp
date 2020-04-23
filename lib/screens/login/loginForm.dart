@@ -4,6 +4,7 @@ import 'package:avecgroupapp/ui/colors.dart';
 import 'package:avecgroupapp/ui/textStyles.dart';
 import 'package:avecgroupapp/widgets/ourContainer.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -12,20 +13,44 @@ class OurLoginForm extends StatefulWidget {
   _OurLoginFormState createState() => _OurLoginFormState();
 }
 
+enum LoginType {
+  email,
+  google,
+}
+
 class _OurLoginFormState extends State<OurLoginForm> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  void _logInUser(String email, String password, BuildContext context) async {
+  void _logInUser(
+      {@required LoginType type,
+      String email,
+      String password,
+      BuildContext context}) async {
+
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
+    String _returnString;
+
+    switch (type) {
+      case LoginType.email:
+        _returnString = await _currentUser.logInUser(email, password);
+        break;
+      case LoginType.google:
+        _returnString = await _currentUser.logInUserWithGoogle();
+        break;
+      default:
+    }
+    
 
     try {
-      if (await _currentUser.logInUser(email, password)) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) => JOCG()));
+      if (_returnString == "success") {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (BuildContext context) => JOCG()));
       }
     } catch (e) {
-      print(e);
+      Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text("Incorrect LogIn info"),
+          duration: Duration(seconds: 2)));
     }
   }
 
@@ -74,7 +99,10 @@ class _OurLoginFormState extends State<OurLoginForm> {
                 if (_passwordController.text != null &&
                     _emailController.text != null) {
                   _logInUser(
-                      _emailController.text, _passwordController.text, context);
+                      type: LoginType.email,
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                      context: context);
                 } else {
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text("Please enter something in the fields"),
@@ -89,7 +117,30 @@ class _OurLoginFormState extends State<OurLoginForm> {
               elevation: 0.0,
               gradient: commonGradient,
             ),
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(35.0, 8.0, 35.0, 8.0),
+            child: OutlineButton.icon(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              color: globalPurple,
+              splashColor: globalPurple,
+              onPressed: () {
+                _logInUser(
+                    type: LoginType.google,
+                    context: context);
+              },
+              icon: Icon(
+                FontAwesomeIcons.google,
+                color: globalPurple,
+              ),
+              label: Text(
+                "Login with Google",
+                style: buttonStyle2,
+              ),
+            ),
+          ),
         ],
       ),
     );

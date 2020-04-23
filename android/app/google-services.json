@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "528248817861-pvefa98dajhhcln1d1o392jt6d56ajef.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sheru.avecgroupapp",
+            "certificate_hash": "fd4294479c0400e6e885e2f1ad9922ba4bec325e"
+          }
+        },
+        {
           "client_id": "528248817861-4veunugooir8uo5umf126pt0vqlmiq4m.apps.googleusercontent.com",
           "client_type": 3
         }
