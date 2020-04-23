@@ -13,6 +13,7 @@ class OurLoginForm extends StatefulWidget {
   _OurLoginFormState createState() => _OurLoginFormState();
 }
 
+//* The two types log in we provide
 enum LoginType {
   email,
   google,
@@ -28,9 +29,11 @@ class _OurLoginFormState extends State<OurLoginForm> {
       String password,
       BuildContext context}) async {
 
+    //* Instance of Current User
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
     String _returnString;
 
+    //* Based on "type" we call different functions
     switch (type) {
       case LoginType.email:
         _returnString = await _currentUser.logInUser(email, password);

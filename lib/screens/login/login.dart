@@ -7,6 +7,7 @@ import 'package:avecgroupapp/widgets/clipper.dart';
 
 class LogIn extends StatelessWidget {
 
+  //* UI aspect of the login screen
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +33,7 @@ class LogIn extends StatelessWidget {
                   padding: EdgeInsets.all(20.0),
                   children: <Widget>[
                     OurLoginForm(),
+                    SizedBox(height:40.0,),
                     Center(
                       child: RichText(
                           text: TextSpan(

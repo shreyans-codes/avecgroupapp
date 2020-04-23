@@ -14,6 +14,7 @@ class CurrentUser extends ChangeNotifier {
   Future<String> onStartUp() async {
     String retValue = "error";
 
+    //* As soon as we have a user, this gets called
     try {
       FirebaseUser _firebaseUser = await _auth.currentUser();
       _uid = _firebaseUser.uid;
@@ -23,6 +24,21 @@ class CurrentUser extends ChangeNotifier {
       print(e);
     }
     return retValue;
+  }
+
+  Future<String> signOut() async {
+    String retVal = "error";
+
+    try {
+      await _auth.signOut();
+      _uid = null;
+      _email = null;
+      retVal = "success";
+    } catch (e) {
+      print(e);
+    }
+
+    return retVal;
   }
 
   Future<String> signUpUser(String email, String password) async {

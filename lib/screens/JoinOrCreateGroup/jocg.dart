@@ -1,8 +1,11 @@
 import 'package:avecgroupapp/screens/joinGroup/joinGroup.dart';
+import 'package:avecgroupapp/screens/login/login.dart';
+import 'package:avecgroupapp/states/currentUser.dart';
 import 'package:avecgroupapp/ui/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class JOCG extends StatelessWidget {
   @override
@@ -138,7 +141,22 @@ class JOCG extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                )
+                ),
+                FlatButton(
+                  onPressed: () async {
+                    CurrentUser _currentUser =
+                        Provider.of<CurrentUser>(context, listen: false);
+                    String returnVal = await _currentUser.signOut();
+                    if (returnVal == "success") {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => LogIn()),
+                          (route) => false);
+                    }
+                  },
+                  child: Text("Sign Out"),
+                ),
               ],
             ),
           ),
