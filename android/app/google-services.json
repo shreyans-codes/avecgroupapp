@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "528248817861",
+    "firebase_url": "https://avecgroup-a2ea0.firebaseio.com",
+    "project_id": "avecgroup-a2ea0",
+    "storage_bucket": "avecgroup-a2ea0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528248817861:android:82819d9a3c86b5232688ac",
+        "android_client_info": {
+          "package_name": "com.sheru.avecgroupapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528248817861-4veunugooir8uo5umf126pt0vqlmiq4m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU_PWpLkX6YDVp4aAXIt_k4k982RtPwEA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528248817861-4veunugooir8uo5umf126pt0vqlmiq4m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-import 'package:avecgroupapp/screens/home/home.dart';
+import 'package:avecgroupapp/screens/JoinOrCreateGroup/jocg.dart';
 import 'package:avecgroupapp/states/currentUser.dart';
 import 'package:avecgroupapp/ui/colors.dart';
 import 'package:avecgroupapp/ui/textStyles.dart';
@@ -22,7 +22,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
     try {
       if (await _currentUser.logInUser(email, password)) {
         Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()));
+            MaterialPageRoute(builder: (BuildContext context) => JOCG()));
       }
     } catch (e) {
       print(e);

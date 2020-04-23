@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 var borderColor = Color.fromARGB(255, 112, 112, 112);
 var globalPurple = Color.fromARGB(255, 130, 133, 212);
+var themeBlueGreen = Color.fromARGB(255, 0, 191, 166);
+var subGrey = Color.fromARGB(255, 91, 107, 120);
 var commonGradient = LinearGradient(
   colors: [
     Color.fromARGB(255, 0, 191, 166),

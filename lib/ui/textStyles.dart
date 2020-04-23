@@ -1,17 +1,11 @@
 import 'package:avecgroupapp/ui/colors.dart';
 import 'package:flutter/material.dart';
 
-var loginStyle1 = TextStyle(
-  color: Colors.black,
-  fontSize: 25.0,
-  fontWeight: FontWeight.bold
-);
+var loginStyle1 =
+    TextStyle(color: Colors.black, fontSize: 25.0, fontWeight: FontWeight.bold);
 
-var buttonStyle1 = TextStyle(
-  color: Colors.white,
-  fontSize: 25.0,
-  fontWeight: FontWeight.bold
-);
+var buttonStyle1 =
+    TextStyle(color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold);
 
 var buttonStyle2 = TextStyle(
   color: globalPurple,
@@ -20,13 +14,19 @@ var buttonStyle2 = TextStyle(
 );
 
 var signUpStyle1 = TextStyle(
-  color: Colors.black,
-  fontSize: 15.0,
-  fontWeight: FontWeight.normal
+    color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.normal);
+
+var signUpStyleLink =
+    TextStyle(color: globalPurple, fontSize: 20.0, fontWeight: FontWeight.bold);
+
+var jcgHeading = TextStyle(
+  color: themeBlueGreen,
+  fontSize: 45.0,
+  fontWeight: FontWeight.bold,
 );
 
-var signUpStyleLink = TextStyle(
-  color: globalPurple,
-  fontSize: 20.0,
-  fontWeight: FontWeight.bold
+var jcgButton = TextStyle(
+  color: Colors.white,
+  fontSize: 35.0,
+  fontWeight: FontWeight.bold,
 );

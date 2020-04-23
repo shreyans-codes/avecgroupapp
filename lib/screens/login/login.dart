@@ -22,11 +22,12 @@ class LogIn extends StatelessWidget {
                   child: Center(
                     child: CircleAvatar(
                       radius: 60.0,
-                      backgroundColor: Colors.black,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: AssetImage("assets/images/jaipur.jpg"),
                     ),
                   )),
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: ListView(
                   padding: EdgeInsets.all(20.0),
                   children: <Widget>[
