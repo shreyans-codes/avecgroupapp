@@ -1,6 +1,6 @@
 import 'package:avecgroupapp/screens/root/root.dart';
 import 'package:avecgroupapp/states/currentUser.dart';
-import 'package:avecgroupapp/ui/ourTheme.dart';
+import 'package:avecgroupapp/ui/appThemes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,10 +13,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => CurrentUser(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: OurTheme().buildTheme(),
-        home: OurRoot(),// * This checks if we were previously logged in
+      child: ChangeNotifierProvider(
+        create: (_) => ThemeNotifier(),
+        child: Consumer<ThemeNotifier>(
+          builder: (BuildContext context, ThemeNotifier value, Widget child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: value.isDarkTheme ? darkTheme : lightTheme,
+              home: OurRoot(),
+              routes: {
+                OurRoot.rootRouteName : (context) => OurRoot(),
+              }, // * This checks if we were previously logged in
+            );
+          },
+        ),
       ),
     );
   }

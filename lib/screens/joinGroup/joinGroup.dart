@@ -1,12 +1,27 @@
+import 'package:avecgroupapp/screens/root/root.dart';
+import 'package:avecgroupapp/services/database.dart';
+import 'package:avecgroupapp/states/currentUser.dart';
 import 'package:avecgroupapp/ui/colors.dart';
 import 'package:avecgroupapp/ui/textStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class JoinGroup extends StatelessWidget {
   TextEditingController _codeController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+//  TextEditingController _passwordController = TextEditingController();
+
+  void _joinGroup(BuildContext context, String groupId) async {
+    CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
+    String _result = await OurDatabase()
+        .joinGroup(groupId: groupId, userId: _currentUser.getCurrentUser.uid);
+    if (_result == "success") {
+      _currentUser.getCurrentUser.groups.add(OurDatabase.groupJoinId);
+      Navigator.pushNamedAndRemoveUntil(
+          context, OurRoot.rootRouteName, (route) => false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,33 +67,38 @@ class JoinGroup extends StatelessWidget {
                   children: <Widget>[
                     FieldHeading("Enter Code"),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
+                      padding:
+                          const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
                       child: TextFormField(
                         decoration: InputDecoration(
                           hintText: "Paste or enter code here",
                           suffixIcon: IconButton(
-                              icon: Icon(FontAwesomeIcons.paste), onPressed: () {}),
+                              icon: Icon(FontAwesomeIcons.paste),
+                              onPressed: () {}),
                         ),
                         controller: _codeController,
                       ),
                     ),
-                    FieldHeading("Password"),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            hintText: "Enter Group Password",
-                            suffixIcon: IconButton(
-                                icon: Icon(FontAwesomeIcons.eye),
-                                onPressed: () {})),
-                        obscureText: true,
-                        controller: _passwordController,
-                      ),
+                    // FieldHeading("Password"),
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
+                    //   child: TextFormField(
+                    //     decoration: InputDecoration(
+                    //         hintText: "Enter Group Password",
+                    //         suffixIcon: IconButton(
+                    //             icon: Icon(FontAwesomeIcons.eye),
+                    //             onPressed: () {})),
+                    //     obscureText: true,
+                    //     controller: _passwordController,
+                    //   ),
+                    // ),
+                    SizedBox(
+                      height: 25,
                     ),
-                    SizedBox(height: 25,),
                     FlatButton(
                       padding: EdgeInsets.fromLTRB(85, 10, 85, 10),
-                      onPressed: () {},
+                      onPressed: () =>
+                          _joinGroup(context, _codeController.text),
                       child: Text(
                         "Join",
                         style: jcgButton,

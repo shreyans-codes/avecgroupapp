@@ -48,7 +48,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
     try {
       if (_returnString == "success") {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (BuildContext context) => JOCG()));
+            .push(MaterialPageRoute(builder: (BuildContext context) => JOCG(shouldShowBackButton: false,)));
       }
     } catch (e) {
       Scaffold.of(context).showSnackBar(SnackBar(

@@ -14,25 +14,40 @@ class OurSignUpForm extends StatefulWidget {
 
 class _OurSignUpFormState extends State<OurSignUpForm> {
   TextEditingController _fullNameController = TextEditingController();
-  TextEditingController _userNameController = TextEditingController();
+  TextEditingController _statusController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
 
-  void _signUpUser(String email, String password, BuildContext context) async {
+  void _signUpUser(
+      {String email,
+      String password,
+      BuildContext context,
+      String fullName,
+      String status}) async {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
 
-    String _returnString = await _currentUser.signUpUser(email, password);
+    String _returnString =
+        await _currentUser.signUpUser(email, password, fullName, status);
 
     try {
       if (_returnString == "success") {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) => JOCG()));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => JOCG(
+              shouldShowBackButton: false,
+            ),
+          ),
+        );
       }
     } catch (e) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text(_returnString),
-                  duration: Duration(seconds: 2)));
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_returnString),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 
@@ -68,10 +83,10 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                 obscureText: true,
                 controller: _confirmPasswordController,
               ),
-              FieldHeading("Create Username"),
+              FieldHeading("Status"),
               TextFormField(
-                decoration: InputDecoration(hintText: "Select unique Username"),
-                controller: _userNameController,
+                decoration: InputDecoration(hintText: "Write your status"),
+                controller: _statusController,
               ),
             ],
           ),
@@ -84,7 +99,11 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
             callback: () {
               if (_passwordController.text == _confirmPasswordController.text) {
                 _signUpUser(
-                    _emailController.text, _passwordController.text, context);
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    context: context,
+                    fullName: _fullNameController.text,
+                    status: _statusController.text);
               } else {
                 Scaffold.of(context).showSnackBar(SnackBar(
                   content: Text("The passwords do not match"),

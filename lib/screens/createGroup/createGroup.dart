@@ -1,9 +1,12 @@
-import 'package:avecgroupapp/functions/toggle.dart';
+import 'package:avecgroupapp/screens/root/root.dart';
+import 'package:avecgroupapp/services/database.dart';
+import 'package:avecgroupapp/states/currentUser.dart';
 import 'package:avecgroupapp/ui/colors.dart';
 import 'package:avecgroupapp/ui/textStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class CreateGroup extends StatefulWidget {
   @override
@@ -13,9 +16,21 @@ class CreateGroup extends StatefulWidget {
 class _CreateGroupState extends State<CreateGroup> {
   TextEditingController _nameController = TextEditingController();
 
-  TextEditingController _passwordController = TextEditingController();
+//  TextEditingController _passwordController = TextEditingController();
 
-  bool controller = true;
+  // bool controller = true;
+
+  void _createGroup(BuildContext context, String groupName) async {
+    CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
+    String _result = await OurDatabase().createGroup(
+        groupName: groupName, userId: _currentUser.getCurrentUser.uid);
+        
+    if (_result == "success") {
+      _currentUser.getCurrentUser.groups.add(OurDatabase.groupId);
+      Navigator.pushNamedAndRemoveUntil(
+          context, OurRoot.rootRouteName, (route) => false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,30 +85,31 @@ class _CreateGroupState extends State<CreateGroup> {
                         controller: _nameController,
                       ),
                     ),
-                    FieldHeading("Password"),
-                    Padding(
-                      padding:
-                          const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            hintText: "Create A Group Password",
-                            suffixIcon: IconButton(
-                                icon: Icon(controller == true? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash),
-                                onPressed: () {
-                                  setState(() {
-                                    toggle(controller);
-                                  });
-                                })),
-                        obscureText: controller,
-                        controller: _passwordController,
-                      ),
-                    ),
+                    // FieldHeading("Password"),
+                    // Padding(
+                    //   padding:
+                    //       const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
+                    //   child: TextFormField(
+                    //     decoration: InputDecoration(
+                    //         hintText: "Create A Group Password",
+                    //         suffixIcon: IconButton(
+                    //             icon: Icon(controller == true? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash),
+                    //             onPressed: () {
+                    //               setState(() {
+                    //                 controller = !controller;
+                    //               });
+                    //             })),
+                    //     obscureText: controller,
+                    //     controller: _passwordController,
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 25,
                     ),
                     FlatButton(
                       padding: EdgeInsets.fromLTRB(85, 10, 85, 10),
-                      onPressed: () {},
+                      onPressed: () =>
+                          _createGroup(context, _nameController.text),
                       child: Text(
                         "Create",
                         style: jcgButton,

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:avecgroupapp/widgets/clipper.dart';
 
 class LogIn extends StatelessWidget {
-
   //* UI aspect of the login screen
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,9 @@ class LogIn extends StatelessWidget {
                   padding: EdgeInsets.all(20.0),
                   children: <Widget>[
                     OurLoginForm(),
-                    SizedBox(height:40.0,),
+                    SizedBox(
+                      height: 40.0,
+                    ),
                     Center(
                       child: RichText(
                           text: TextSpan(
@@ -41,16 +42,17 @@ class LogIn extends StatelessWidget {
                         children: <TextSpan>[
                           TextSpan(text: "New User? "),
                           TextSpan(
-                              text: "Sign Up",
-                              style: signUpStyleLink,
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              SignUp()));
-                                }),
+                            text: "Sign Up",
+                            style: signUpStyleLink,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            SignUp()));
+                              },
+                          ),
                         ],
                       )),
                     )

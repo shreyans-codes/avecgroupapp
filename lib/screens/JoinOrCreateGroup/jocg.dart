@@ -1,13 +1,49 @@
+import 'package:avecgroupapp/screens/createGroup/createGroup.dart';
 import 'package:avecgroupapp/screens/joinGroup/joinGroup.dart';
 import 'package:avecgroupapp/screens/login/login.dart';
 import 'package:avecgroupapp/states/currentUser.dart';
+import 'package:avecgroupapp/ui/appThemes.dart';
 import 'package:avecgroupapp/ui/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class JOCG extends StatelessWidget {
+class JOCG extends StatefulWidget {
+  
+  bool shouldShowBackButton;
+
+  JOCG({@required this.shouldShowBackButton});
+
+  @override
+  _JOCGState createState() => _JOCGState();
+}
+
+class _JOCGState extends State<JOCG> {
+  bool checkDarkTheme = true;
+  String actionDisplayText = "Dark";
+
+  Color bgColor = Colors.black;
+  Color textColor = Colors.white;
+  Color subHeadColor = subGrey;
+
+  void toggle() {
+    setState(() {
+      if (checkDarkTheme == true) {
+        actionDisplayText = "Light";
+        bgColor = Colors.white;
+        textColor = Colors.black;
+        subHeadColor = subHeadColorDarkTheme;
+      } else {
+        actionDisplayText = "Dark";
+        bgColor = Colors.black;
+        textColor = Colors.white;
+        subHeadColor = subGrey;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,26 +51,38 @@ class JOCG extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(FontAwesomeIcons.arrowLeft),
-          color: Colors.black,
-          splashColor: themeBlueGreen,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        leading: widget.shouldShowBackButton == true
+            ? IconButton(
+                icon: Icon(FontAwesomeIcons.arrowLeft),
+                color: Colors.black,
+                splashColor: themeBlueGreen,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            : null,
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: FlatButton(
-              onPressed: () {},
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0)),
-              child: Text(
-                "Dark",
-                style: TextStyle(color: Colors.white, fontSize: 15.0),
-              ),
-              color: Colors.black,
+            child: Consumer<ThemeNotifier>(
+              builder: (context, value, child) {
+                return FlatButton(
+                  onPressed: () {
+                    // value.toggleTheme();
+                    // checkDarkTheme = !checkDarkTheme;
+                    // toggle();
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  child: Text(
+                    actionDisplayText,
+                    style: TextStyle(
+                        color: textColor,
+                        fontSize: 15.0),
+                  ),
+                  color: bgColor,
+                );
+              },
             ),
           )
         ],
@@ -43,7 +91,7 @@ class JOCG extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(45.0, 12.0, 0.0, 12.0),
+            padding: const EdgeInsets.fromLTRB(25.0, 12.0, 0.0, 12.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: RichText(
@@ -52,14 +100,14 @@ class JOCG extends StatelessWidget {
                     TextSpan(
                         text: "Welcome,",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: bgColor,
                           fontSize: 25.0,
                           fontWeight: FontWeight.bold,
                         )),
                     TextSpan(
                         text: "\n Join or Create a Group",
                         style: TextStyle(
-                            color: borderColor,
+                            color: subHeadColor,
                             fontSize: 15.0,
                             fontWeight: FontWeight.w800))
                   ],
@@ -91,17 +139,17 @@ class JOCG extends StatelessWidget {
                             builder: (BuildContext context) => JoinGroup()));
                   },
                   icon: CircleAvatar(
-                    foregroundColor: Colors.black,
                     backgroundColor: Colors.transparent,
                     child: Icon(
                       FontAwesomeIcons.userFriends,
+                      color: bgColor,
                       size: 25.0,
                     ),
                   ),
                   label: Text(
                     "Join A Group",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: bgColor,
                       fontSize: 20.0,
                     ),
                   ),
@@ -110,7 +158,7 @@ class JOCG extends StatelessWidget {
                   ),
                   borderSide: BorderSide(
                     width: 3.0,
-                    color: Colors.black,
+                    color:bgColor,
                   ),
                   splashColor: themeBlueGreen,
                 ),
@@ -122,7 +170,7 @@ class JOCG extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (BuildContext context) => JoinGroup()));
+                            builder: (BuildContext context) => CreateGroup()));
                   },
                   color: themeBlueGreen,
                   splashColor: globalPurple,
@@ -155,7 +203,7 @@ class JOCG extends StatelessWidget {
                           (route) => false);
                     }
                   },
-                  child: Text("Sign Out"),
+                  child: Text("Sign Out", style: TextStyle(color: bgColor),),
                 ),
               ],
             ),
