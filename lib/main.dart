@@ -1,4 +1,13 @@
+import 'package:avecgroupapp/screens/JoinOrCreateGroup/jocg.dart';
+import 'package:avecgroupapp/screens/createGroup/createGroup.dart';
+import 'package:avecgroupapp/screens/home/home.dart';
+import 'package:avecgroupapp/screens/inChatScreen/groupChatPage.dart';
+import 'package:avecgroupapp/screens/joinGroup/joinGroup.dart';
+import 'package:avecgroupapp/screens/loadingSplashScreen/loadingScreen.dart';
+import 'package:avecgroupapp/screens/login/login.dart';
 import 'package:avecgroupapp/screens/root/root.dart';
+import 'package:avecgroupapp/screens/signup/signup.dart';
+import 'package:avecgroupapp/services/routes.dart';
 import 'package:avecgroupapp/states/currentUser.dart';
 import 'package:avecgroupapp/ui/appThemes.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +31,15 @@ class MyApp extends StatelessWidget {
               theme: value.isDarkTheme ? darkTheme : lightTheme,
               home: OurRoot(),
               routes: {
-                OurRoot.rootRouteName : (context) => OurRoot(),
+                OurRoutes.rootId : (context) => OurRoot(),
+                OurRoutes.logInId : (context) => LogIn(),
+                OurRoutes.signUpId : (context) => SignUp(),
+                OurRoutes.jocgId : (context) => JOCG(shouldShowBackButton: false),
+                OurRoutes.createGroupId : (context) => CreateGroup(),
+                OurRoutes.joinGroupId : (context) => JoinGroup(),
+                OurRoutes.loadingScreenId : (context) => LoadingScreen(),
+                OurRoutes.homePageId : (context) => HomeScreen(),
+                OurRoutes.inChatScreen : (context) => GroupChatPage(),
               }, // * This checks if we were previously logged in
             );
           },

@@ -7,7 +7,8 @@ class OurUser {
   String uid;
   // String profilePicUrl;
   Timestamp accountCreated;
-  List groups;
+  String groupId;
+  //List groups;
 
   OurUser(
       {this.fullName,
@@ -16,5 +17,7 @@ class OurUser {
       this.uid,
       // this.profilePicUrl,
       this.accountCreated,
-      this.groups});
+      this.groupId,
+      //this.groups,
+      });
 }

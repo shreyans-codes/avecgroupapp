@@ -33,7 +33,8 @@ class OurDatabase {
       retUser.email = _docSnapshot.data['email'];
       retUser.status = _docSnapshot.data['status'];
       retUser.accountCreated = _docSnapshot.data['accountCreated'];
-      retUser.groups = _docSnapshot.data['groups'];
+      retUser.groupId = _docSnapshot.data['groupId'];
+      //retUser.groups = _docSnapshot.data['groups'];
     } catch (e) {
       print(e);
     }
@@ -41,21 +42,23 @@ class OurDatabase {
   }
 
   static String groupId;
-  Future<String> createGroup({String groupName, String userId, String userName}) async {
+  Future<String> createGroup(
+      {String groupName, String userId, String userName}) async {
     String retVal = "error";
     List<String> members = List();
     try {
       members.add(userId);
-      DocumentReference _docReference = await _firestore.collection("group").add({
-        'name' : groupName,
-        'leader' : userId,
-        'leaderName' : userName,
-        'members' : members,
-        'groupCreated' : Timestamp.now(),
+      DocumentReference _docReference =
+          await _firestore.collection("group").add({
+        'name': groupName,
+        'leader': userId,
+        'leaderName': userName,
+        'members': members,
+        'groupCreated': Timestamp.now(),
       });
 
       await _firestore.collection("users").document(userId).updateData({
-        'groups' : FieldValue.arrayUnion([_docReference.documentID]),
+        'groups': FieldValue.arrayUnion([_docReference.documentID]),
       });
       groupId = _docReference.documentID.toString();
       retVal = "success";
@@ -70,13 +73,17 @@ class OurDatabase {
     String retVal = "error";
 
     try {
-       await _firestore.collection("group").document(groupId).updateData({
-        'members' : FieldValue.arrayUnion([userId]),
+      await _firestore.collection("group").document(groupId).updateData({
+        'members': FieldValue.arrayUnion([userId]),
       });
-       await _firestore.collection("users").document(userId).updateData({
-        'groups' : FieldValue.arrayUnion([groupId]),
+      await _firestore.collection("users").document(userId).updateData({
+        'groupId': groupId,
       });
-      groupJoinId = groupId;
+      // await _firestore.collection("users").document(userId).updateData({
+      //   'groups': FieldValue.arrayUnion([groupId]),
+      // }); //* For later
+      groupJoinId =
+          groupId; // * This is so that we can add the Group's detail in the group home screen
       retVal = "success";
     } catch (e) {
       retVal = e.message;

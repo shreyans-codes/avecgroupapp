@@ -1,5 +1,5 @@
-import 'package:avecgroupapp/screens/root/root.dart';
 import 'package:avecgroupapp/services/database.dart';
+import 'package:avecgroupapp/services/routes.dart';
 import 'package:avecgroupapp/states/currentUser.dart';
 import 'package:avecgroupapp/ui/colors.dart';
 import 'package:avecgroupapp/ui/textStyles.dart';
@@ -17,9 +17,9 @@ class JoinGroup extends StatelessWidget {
     String _result = await OurDatabase()
         .joinGroup(groupId: groupId, userId: _currentUser.getCurrentUser.uid);
     if (_result == "success") {
-      _currentUser.getCurrentUser.groups.add(OurDatabase.groupJoinId);
+      _currentUser.getCurrentUser.groupId = OurDatabase.groupId;
       Navigator.pushNamedAndRemoveUntil(
-          context, OurRoot.rootRouteName, (route) => false);
+          context, OurRoutes.rootId, (route) => false);
     }
   }
 

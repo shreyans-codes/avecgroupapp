@@ -1,6 +1,4 @@
-import 'package:avecgroupapp/screens/createGroup/createGroup.dart';
-import 'package:avecgroupapp/screens/joinGroup/joinGroup.dart';
-import 'package:avecgroupapp/screens/login/login.dart';
+import 'package:avecgroupapp/services/routes.dart';
 import 'package:avecgroupapp/states/currentUser.dart';
 import 'package:avecgroupapp/ui/appThemes.dart';
 import 'package:avecgroupapp/ui/colors.dart';
@@ -11,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class JOCG extends StatefulWidget {
-  
   bool shouldShowBackButton;
 
   JOCG({@required this.shouldShowBackButton});
@@ -76,9 +73,7 @@ class _JOCGState extends State<JOCG> {
                       borderRadius: BorderRadius.circular(30.0)),
                   child: Text(
                     actionDisplayText,
-                    style: TextStyle(
-                        color: textColor,
-                        fontSize: 15.0),
+                    style: TextStyle(color: textColor, fontSize: 15.0),
                   ),
                   color: bgColor,
                 );
@@ -133,10 +128,7 @@ class _JOCGState extends State<JOCG> {
               children: <Widget>[
                 OutlineButton.icon(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => JoinGroup()));
+                    Navigator.pushNamed(context, OurRoutes.joinGroupId);
                   },
                   icon: CircleAvatar(
                     backgroundColor: Colors.transparent,
@@ -158,7 +150,7 @@ class _JOCGState extends State<JOCG> {
                   ),
                   borderSide: BorderSide(
                     width: 3.0,
-                    color:bgColor,
+                    color: bgColor,
                   ),
                   splashColor: themeBlueGreen,
                 ),
@@ -167,10 +159,7 @@ class _JOCGState extends State<JOCG> {
                 ),
                 FlatButton.icon(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => CreateGroup()));
+                    Navigator.pushNamed(context, OurRoutes.createGroupId);
                   },
                   color: themeBlueGreen,
                   splashColor: globalPurple,
@@ -196,14 +185,14 @@ class _JOCGState extends State<JOCG> {
                         Provider.of<CurrentUser>(context, listen: false);
                     String returnVal = await _currentUser.signOut();
                     if (returnVal == "success") {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => LogIn()),
-                          (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, OurRoutes.logInId, (route) => false);
                     }
                   },
-                  child: Text("Sign Out", style: TextStyle(color: bgColor),),
+                  child: Text(
+                    "Sign Out",
+                    style: TextStyle(color: bgColor),
+                  ),
                 ),
               ],
             ),

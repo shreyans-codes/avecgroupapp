@@ -1,5 +1,6 @@
 import 'package:avecgroupapp/screens/JoinOrCreateGroup/jocg.dart';
 import 'package:avecgroupapp/screens/home/home.dart';
+import 'package:avecgroupapp/screens/inChatScreen/groupChatPage.dart';
 import 'package:avecgroupapp/screens/loadingSplashScreen/loadingScreen.dart';
 import 'package:avecgroupapp/screens/login/login.dart';
 import 'package:avecgroupapp/states/currentUser.dart';
@@ -18,7 +19,6 @@ enum AuthStatus {
 //* we can show a loading screen
 
 class OurRoot extends StatefulWidget {
-  static String rootRouteName = 'rootPage';
   @override
   _OurRootState createState() => _OurRootState();
 }
@@ -36,8 +36,8 @@ class _OurRootState extends State<OurRoot> {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
     String _result = await _currentUser.onStartUp();
     if (_result == "success") {
-      print(_currentUser.getCurrentUser.groups);
-      if (_currentUser.getCurrentUser.groups != null) {
+      print(_currentUser.getCurrentUser.groupId);
+      if (_currentUser.getCurrentUser.groupId != null) {
         setState(() {
           _authStatus = AuthStatus.inGroup;
         });
@@ -71,7 +71,7 @@ class _OurRootState extends State<OurRoot> {
         );
         break;
       case AuthStatus.inGroup:
-        returnWidet = HomeScreen();
+        returnWidet = GroupChatPage();
         break;
       default:
     }
