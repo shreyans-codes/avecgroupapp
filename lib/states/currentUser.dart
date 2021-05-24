@@ -3,6 +3,7 @@ import 'package:avecgroupapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class CurrentUser extends ChangeNotifier {
@@ -17,7 +18,7 @@ class CurrentUser extends ChangeNotifier {
 
     //* As soon as we have a user, this gets called
     try {
-      FirebaseUser _firebaseUser = await _auth.currentUser();
+      User _firebaseUser = _auth.currentUser;
       _currentUser = await OurDatabase().getUserInfo(_firebaseUser.uid);
       if (_currentUser != null) {
         retValue = "success";
@@ -48,7 +49,7 @@ class CurrentUser extends ChangeNotifier {
     OurUser _user = OurUser(); //* Local object, only for this function
 
     try {
-      AuthResult _authResult = await _auth.createUserWithEmailAndPassword(
+      UserCredential _authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       print(_authResult.user);
 
@@ -73,7 +74,7 @@ class CurrentUser extends ChangeNotifier {
     String retValue = "error";
 
     try {
-      AuthResult _authResult = await _auth.signInWithEmailAndPassword(
+      UserCredential _authResult = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       print(_authResult);
 
@@ -103,10 +104,10 @@ class CurrentUser extends ChangeNotifier {
     try {
       GoogleSignInAccount _googleUser = await _googleSignIn.signIn();
       GoogleSignInAuthentication _googleAuth = await _googleUser.authentication;
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
+      final AuthCredential credential = GoogleAuthProvider.credential(
           idToken: _googleAuth.idToken, accessToken: _googleAuth.accessToken);
 
-      AuthResult _authResult = await _auth.signInWithCredential(credential);
+      UserCredential _authResult = await _auth.signInWithCredential(credential);
       _currentUser.uid = _authResult.user.uid;
       _currentUser.email = _authResult.user.email;
 

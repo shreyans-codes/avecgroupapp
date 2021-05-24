@@ -1,4 +1,3 @@
-
 import 'package:avecgroupapp/services/database.dart';
 import 'package:avecgroupapp/services/routes.dart';
 import 'package:avecgroupapp/states/currentUser.dart';
@@ -25,7 +24,7 @@ class _CreateGroupState extends State<CreateGroup> {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
     String _result = await OurDatabase().createGroup(
         groupName: groupName, userId: _currentUser.getCurrentUser.uid);
-        
+
     if (_result == "success") {
       _currentUser.getCurrentUser.groupId = OurDatabase.groupId;
       Navigator.pushNamedAndRemoveUntil(
@@ -36,7 +35,7 @@ class _CreateGroupState extends State<CreateGroup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
+      //resizeToAvoidBottomPadding: true,
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,

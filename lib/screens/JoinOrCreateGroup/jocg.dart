@@ -44,7 +44,7 @@ class _JOCGState extends State<JOCG> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      //resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,

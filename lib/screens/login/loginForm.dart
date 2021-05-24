@@ -28,7 +28,6 @@ class _OurLoginFormState extends State<OurLoginForm> {
       String email,
       String password,
       BuildContext context}) async {
-
     //* Instance of Current User
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
     String _returnString;
@@ -43,12 +42,13 @@ class _OurLoginFormState extends State<OurLoginForm> {
         break;
       default:
     }
-    
 
     try {
       if (_returnString == "success") {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (BuildContext context) => JOCG(shouldShowBackButton: false,)));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => JOCG(
+                  shouldShowBackButton: false,
+                )));
       }
     } catch (e) {
       Scaffold.of(context).showSnackBar(SnackBar(
@@ -130,9 +130,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
               color: globalPurple,
               splashColor: globalPurple,
               onPressed: () {
-                _logInUser(
-                    type: LoginType.google,
-                    context: context);
+                _logInUser(type: LoginType.google, context: context);
               },
               icon: Icon(
                 FontAwesomeIcons.google,

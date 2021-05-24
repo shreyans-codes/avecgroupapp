@@ -19,31 +19,26 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  bloc: ^3.0.0
-  gradient_widgets: ^0.5.2
-  provider: ^4.0.5
-  firebase_auth: ^0.16.0
-  flutter_svg: ^0.17.4
-  font_awesome_flutter: ^8.8.1
-  google_sign_in: ^4.4.4
-  shared_preferences: ^0.5.7
-  cloud_firestore: ^0.13.5
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  bloc: ^7.0.0
+  cloud_firestore: ^2.2.0
+  cupertino_icons: ^1.0.3
+  firebase_auth: ^1.2.0
+  firebase_core: ^1.2.0
+  flutter_svg: ^0.22.0
+  font_awesome_flutter: ^9.0.0
+  google_sign_in: ^5.0.3
+  gradient_widgets: ^0.6.0
+  provider: ^5.0.0
+  shared_preferences: ^2.0.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -51,18 +46,16 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/images/jaipur.jpg
-   - assets/svg/group_hangout.svg
-   - assets/svg/social_friends.svg
-   - assets/svg/team_page.svg
-   - assets/svg/work_chat.svg
+    - assets/images/jaipur.jpg
+    - assets/svg/group_hangout.svg
+    - assets/svg/social_friends.svg
+    - assets/svg/team_page.svg
+    - assets/svg/work_chat.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -74,8 +67,8 @@ flutter:
         - asset: fonts/Gilroy-ExtraBold.otf
         - asset: fonts/Gilroy-Light.otf
           style: normal
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+    #       - asset: fonts/Schyler-Italic.ttf
+    #         style: italic
     - family: Roboto Black
       fonts:
         - asset: fonts/Roboto-Black.ttf
@@ -104,7 +97,5 @@ flutter:
         - asset: fonts/Roboto-Thin.ttf
         - asset: fonts/Roboto-ThinItalic.ttf
           style: italic
-
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

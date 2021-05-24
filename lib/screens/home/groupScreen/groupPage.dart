@@ -13,25 +13,25 @@ class GroupPage extends StatelessWidget {
             children: <Widget>[
               Text(
                 "Groups",
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.headline3,
               ),
               Text(
                 "Updates",
-                style: Theme.of(context).textTheme.display1,
+                style: Theme.of(context).textTheme.headline1,
               ),
             ],
           ),
           SizedBox(
             height: 15.0,
           ),
-          GroupField(context),
+          groupField(context),
         ],
       ),
     );
   }
 }
 
-Widget GroupField(BuildContext context) {
+Widget groupField(BuildContext context) {
   return Container(
     child: Padding(
       padding: const EdgeInsets.all(12.0),
@@ -57,13 +57,13 @@ Widget GroupField(BuildContext context) {
                 children: <Widget>[
                   Text(
                     "The Artists",
-                    style: Theme.of(context).textTheme.headline,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                   Text(
                     "Amit: Check my new painting",
                     style: Theme.of(context)
                         .textTheme
-                        .subhead
+                        .subtitle1
                         .copyWith(fontSize: 12.0),
                   ),
                 ],

@@ -26,33 +26,36 @@ void sendMessage(String text, BuildContext context) async {
 class GroupChatPage extends StatelessWidget {
   static TextEditingController controller = TextEditingController();
 
-  Firestore _firestore = Firestore.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(context, 'jocg', (route) => false);
-          }),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, 'jocg', (route) => false);
+              }),
           title: Text("College Buddies"),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            StreamBuilder<QuerySnapshot>(
+            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: _firestore.collection("message").snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return CupertinoActivityIndicator();
                 }
-                final messageList = snapshot.data.documents;
+                final messageList = snapshot.data.docs;
                 List<MessageType1> messageBubbleList = [];
                 for (var message in messageList) {
-                  final messageText = message.data['text'];
-                  final messageSender = message.data['sender'];
-                  final messageTime = message.data['timeStamp'];
+                  final messageText = message.data()['text'];
+                  final messageSender = message.data()['sender'];
+                  final messageTime = message.data()['timeStamp'];
 
                   final individualMessage = MessageType1(
                     message: messageText,
@@ -103,9 +106,11 @@ class MessageType1 extends StatelessWidget {
   MessageType1({this.message, this.sender, this.timestamp});
 
   String convertTime(DateTime timestamp) {
-    String inHourAndScecond = timestamp.hour.toString() + ":" + timestamp.minute.toString();
+    String inHourAndScecond =
+        timestamp.hour.toString() + ":" + timestamp.minute.toString();
     return inHourAndScecond;
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -120,8 +125,10 @@ class MessageType1 extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   sender,
-                  style:
-                      Theme.of(context).textTheme.body2.copyWith(fontSize: 20),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      .copyWith(fontSize: 20),
                 ),
               ),
               MessageBox(message, context),

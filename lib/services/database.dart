@@ -2,13 +2,13 @@ import 'package:avecgroupapp/models/userModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OurDatabase {
-  final Firestore _firestore = Firestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<String> createUser(OurUser newUser) async {
     String retVal = "error";
 
     try {
-      await _firestore.collection("users").document(newUser.uid).setData({
+      await _firestore.collection("users").doc(newUser.uid).set({
         'fullName': newUser.fullName,
         'email': newUser.email,
         'status': newUser.status,
@@ -26,15 +26,15 @@ class OurDatabase {
     OurUser retUser = OurUser();
 
     try {
-      DocumentSnapshot _docSnapshot =
-          await _firestore.collection('users').document(uid).get();
+      DocumentSnapshot<Map<String, dynamic>> _docSnapshot =
+          await _firestore.collection('users').doc(uid).get();
       retUser.uid = uid;
-      retUser.fullName = _docSnapshot.data['fullName'];
-      retUser.email = _docSnapshot.data['email'];
-      retUser.status = _docSnapshot.data['status'];
-      retUser.accountCreated = _docSnapshot.data['accountCreated'];
-      retUser.groupId = _docSnapshot.data['groupId'];
-      //retUser.groups = _docSnapshot.data['groups'];
+      retUser.fullName = _docSnapshot.data()['fullName'];
+      retUser.email = _docSnapshot.data()['email'];
+      retUser.status = _docSnapshot.data()['status'];
+      retUser.accountCreated = _docSnapshot.data()['accountCreated'];
+      retUser.groupId = _docSnapshot.data()['groupId'];
+      //retUser.groups = _docSnapshot.data()['groups'];
     } catch (e) {
       print(e);
     }
@@ -57,10 +57,10 @@ class OurDatabase {
         'groupCreated': Timestamp.now(),
       });
 
-      await _firestore.collection("users").document(userId).updateData({
-        'groups': FieldValue.arrayUnion([_docReference.documentID]),
+      await _firestore.collection("users").doc(userId).update({
+        'groups': FieldValue.arrayUnion([_docReference.id]),
       });
-      groupId = _docReference.documentID.toString();
+      groupId = _docReference.id.toString();
       retVal = "success";
     } catch (e) {
       retVal = e.message;
@@ -73,10 +73,10 @@ class OurDatabase {
     String retVal = "error";
 
     try {
-      await _firestore.collection("group").document(groupId).updateData({
+      await _firestore.collection("group").doc(groupId).update({
         'members': FieldValue.arrayUnion([userId]),
       });
-      await _firestore.collection("users").document(userId).updateData({
+      await _firestore.collection("users").doc(userId).update({
         'groupId': groupId,
       });
       // await _firestore.collection("users").document(userId).updateData({

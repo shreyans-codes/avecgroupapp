@@ -25,16 +25,16 @@ ThemeData lightTheme = ThemeData(
   ),
   fontFamily: "Gilroy",
   textTheme: TextTheme(
-    display2: TextStyle(
+    headline3: TextStyle(
       color: Colors.black,
     ),
-    display1: TextStyle(
+    headline4: TextStyle(
       color: subGrey,
     ),
-    headline: TextStyle(color: Colors.black, fontFamily: "Roboto Medium"),
-    subhead: TextStyle(color: subGrey, fontFamily: "Roboto"),
-    body2: TextStyle(color: themeBlueGreen, fontFamily: "Roboto Bold"),
-    body1: TextStyle(color: subGrey, fontFamily: "Roboto"),
+    headline5: TextStyle(color: Colors.black, fontFamily: "Roboto Medium"),
+    subtitle1: TextStyle(color: subGrey, fontFamily: "Roboto"),
+    bodyText1: TextStyle(color: themeBlueGreen, fontFamily: "Roboto Bold"),
+    bodyText2: TextStyle(color: subGrey, fontFamily: "Roboto"),
     caption: TextStyle(color: Colors.white),
   ),
 );
@@ -61,16 +61,16 @@ ThemeData darkTheme = ThemeData(
   ),
   fontFamily: "Gilroy",
   textTheme: TextTheme(
-    display2: TextStyle(
+    headline3: TextStyle(
       color: themeBlueGreen,
     ),
-    display1: TextStyle(
+    headline4: TextStyle(
       color: subGrey,
     ),
-    headline: TextStyle(color: Colors.white, fontFamily: "Roboto Medium"),
-    subhead: TextStyle(color: themeBlueGreen, fontFamily: "Roboto"),
-    body2: TextStyle(color: themeBlueGreen, fontFamily: "Roboto Bold"),
-    body1: TextStyle(color: subGrey, fontFamily: "Roboto"),
+    headline5: TextStyle(color: Colors.white, fontFamily: "Roboto Medium"),
+    subtitle1: TextStyle(color: themeBlueGreen, fontFamily: "Roboto"),
+    bodyText1: TextStyle(color: themeBlueGreen, fontFamily: "Roboto Bold"),
+    bodyText2: TextStyle(color: subGrey, fontFamily: "Roboto"),
     caption: TextStyle(color: Colors.white),
   ),
 );

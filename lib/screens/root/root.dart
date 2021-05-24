@@ -30,7 +30,7 @@ class _OurRootState extends State<OurRoot> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-
+    print("Here");
     //*We get the state, check if the user is logged in "yet" or not.
     //*Once the user is logged in, this will always show the home page, else Log In page
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
