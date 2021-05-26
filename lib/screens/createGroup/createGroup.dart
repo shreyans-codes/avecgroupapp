@@ -22,7 +22,7 @@ class _CreateGroupState extends State<CreateGroup> {
 
   void _createGroup(BuildContext context, String groupName) async {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
-    String _result = await OurDatabase().createGroup(
+    String? _result = await OurDatabase().createGroup(
         groupName: groupName, userId: _currentUser.getCurrentUser.uid);
 
     if (_result == "success") {
@@ -106,18 +106,19 @@ class _CreateGroupState extends State<CreateGroup> {
                     SizedBox(
                       height: 25,
                     ),
-                    FlatButton(
-                      padding: EdgeInsets.fromLTRB(85, 10, 85, 10),
+                    TextButton(
                       onPressed: () =>
                           _createGroup(context, _nameController.text),
                       child: Text(
                         "Create",
                         style: jcgButton,
                       ),
-                      color: themeBlueGreen,
-                      splashColor: globalPurple,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.fromLTRB(85, 10, 85, 10),
+                        backgroundColor: themeBlueGreen,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                       ),
                     )
                   ],

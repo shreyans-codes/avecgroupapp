@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageModel {
-  String text;
-  String toGroup;
-  String userId;
-  String userName;
+  String? text;
+  String? toGroup;
+  String? userId;
+  String? userName;
   //Timestamp timestamp;
   // bool isEvent;
   // num eventNo;

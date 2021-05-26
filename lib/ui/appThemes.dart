@@ -77,10 +77,10 @@ ThemeData darkTheme = ThemeData(
 
 class ThemeNotifier extends ChangeNotifier {
   final String key = 'theme';
-  static SharedPreferences preferences;
-  static bool _isDarkTheme;
+  static SharedPreferences? preferences;
+  static bool? _isDarkTheme;
 
-  bool get isDarkTheme => _isDarkTheme;
+  bool? get isDarkTheme => _isDarkTheme;
 
   ThemeNotifier() {
     _isDarkTheme = false;
@@ -88,7 +88,7 @@ class ThemeNotifier extends ChangeNotifier {
   }
 
   toggleTheme() {
-    _isDarkTheme = !_isDarkTheme;
+    _isDarkTheme = !_isDarkTheme!;
     _savePrefs();
     notifyListeners();
   }
@@ -100,12 +100,12 @@ class ThemeNotifier extends ChangeNotifier {
 
   _loadPrefs() async {
     await _initPrefs();
-    _isDarkTheme = preferences.getBool(key) ?? false;
+    _isDarkTheme = preferences!.getBool(key) ?? false;
     notifyListeners();
   }
 
   _savePrefs() async {
     await _initPrefs();
-    preferences.setBool(key, _isDarkTheme);
+    preferences!.setBool(key, _isDarkTheme!);
   }
 }

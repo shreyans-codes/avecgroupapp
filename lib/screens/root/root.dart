@@ -55,7 +55,7 @@ class _OurRootState extends State<OurRoot> {
 
   @override
   Widget build(BuildContext context) {
-    Widget returnWidet;
+    late Widget returnWidet;
 
     //* Based on authStatus, the user's initial screen is decided
     switch (_authStatus) {

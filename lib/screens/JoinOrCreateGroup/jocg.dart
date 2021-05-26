@@ -5,13 +5,14 @@ import 'package:avecgroupapp/ui/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class JOCG extends StatefulWidget {
   bool shouldShowBackButton;
 
-  JOCG({@required this.shouldShowBackButton});
+  JOCG({required this.shouldShowBackButton});
 
   @override
   _JOCGState createState() => _JOCGState();
@@ -27,7 +28,7 @@ class _JOCGState extends State<JOCG> {
 
   void toggle() {
     setState(() {
-      if (checkDarkTheme == true) {
+      if (checkDarkTheme) {
         actionDisplayText = "Light";
         bgColor = Colors.white;
         textColor = Colors.black;
@@ -63,19 +64,21 @@ class _JOCGState extends State<JOCG> {
             padding: const EdgeInsets.all(8.0),
             child: Consumer<ThemeNotifier>(
               builder: (context, value, child) {
-                return FlatButton(
+                return TextButton(
                   onPressed: () {
-                    // value.toggleTheme();
-                    // checkDarkTheme = !checkDarkTheme;
-                    // toggle();
+                    Get.changeTheme(
+                        Get.isDarkMode ? ThemeData.light() : ThemeData.dark());
                   },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
                   child: Text(
                     actionDisplayText,
                     style: TextStyle(color: textColor, fontSize: 15.0),
                   ),
-                  color: bgColor,
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color?>(bgColor),
+                      shape: MaterialStateProperty.all<OutlinedBorder?>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0)))),
                 );
               },
             ),
@@ -126,7 +129,7 @@ class _JOCGState extends State<JOCG> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                OutlineButton.icon(
+                OutlinedButton.icon(
                   onPressed: () {
                     Navigator.pushNamed(context, OurRoutes.joinGroupId);
                   },
@@ -145,24 +148,33 @@ class _JOCGState extends State<JOCG> {
                       fontSize: 20.0,
                     ),
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    side: BorderSide(
+                      width: 3.0,
+                      color: bgColor,
+                    ),
+                    //Splash Color not available
+                    //splashColor: globalPurple
                   ),
-                  borderSide: BorderSide(
-                    width: 3.0,
-                    color: bgColor,
-                  ),
-                  splashColor: themeBlueGreen,
                 ),
                 SizedBox(
                   height: 25.0,
                 ),
-                FlatButton.icon(
+                TextButton.icon(
                   onPressed: () {
                     Navigator.pushNamed(context, OurRoutes.createGroupId);
                   },
-                  color: themeBlueGreen,
-                  splashColor: globalPurple,
+                  style: TextButton.styleFrom(
+                    backgroundColor: themeBlueGreen,
+
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    //splashColor: globalPurple,
+                  ),
                   label: Padding(
                     padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                     child: Text(
@@ -175,11 +187,8 @@ class _JOCGState extends State<JOCG> {
                     color: Colors.white,
                     size: 25.0,
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () async {
                     CurrentUser _currentUser =
                         Provider.of<CurrentUser>(context, listen: false);

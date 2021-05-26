@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CustomBackgroundDrop extends StatelessWidget {
   const CustomBackgroundDrop({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

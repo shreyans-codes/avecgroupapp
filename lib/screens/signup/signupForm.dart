@@ -4,6 +4,7 @@ import 'package:avecgroupapp/ui/colors.dart';
 import 'package:avecgroupapp/ui/textStyles.dart';
 import 'package:avecgroupapp/widgets/ourContainer.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -20,14 +21,14 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
   TextEditingController _confirmPasswordController = TextEditingController();
 
   void _signUpUser(
-      {String email,
-      String password,
-      BuildContext context,
-      String fullName,
-      String status}) async {
+      {required String email,
+      required String password,
+      required BuildContext context,
+      String? fullName,
+      String? status}) async {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
 
-    String _returnString =
+    String? _returnString =
         await _currentUser.signUpUser(email, password, fullName, status);
 
     try {
@@ -42,12 +43,7 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
         );
       }
     } catch (e) {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text(_returnString),
-          duration: Duration(seconds: 2),
-        ),
-      );
+      Get.snackbar("Error", e.toString());
     }
   }
 
@@ -105,10 +101,8 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                     fullName: _fullNameController.text,
                     status: _statusController.text);
               } else {
-                Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text("The passwords do not match"),
-                  duration: Duration(seconds: 2),
-                ));
+                Get.snackbar("Password Error", "The passwords do not match",
+                    duration: Duration(seconds: 2));
               }
             },
             child: Text(

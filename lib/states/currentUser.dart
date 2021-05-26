@@ -1,9 +1,9 @@
 import 'package:avecgroupapp/models/userModel.dart';
 import 'package:avecgroupapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class CurrentUser extends ChangeNotifier {
@@ -18,7 +18,7 @@ class CurrentUser extends ChangeNotifier {
 
     //* As soon as we have a user, this gets called
     try {
-      User _firebaseUser = _auth.currentUser;
+      User _firebaseUser = _auth.currentUser!;
       _currentUser = await OurDatabase().getUserInfo(_firebaseUser.uid);
       if (_currentUser != null) {
         retValue = "success";
@@ -43,9 +43,9 @@ class CurrentUser extends ChangeNotifier {
     return retVal;
   }
 
-  Future<String> signUpUser(
-      String email, String password, String fullName, String status) async {
-    String retValue = "error";
+  Future<String?> signUpUser(
+      String email, String password, String? fullName, String? status) async {
+    String? retValue = "error";
     OurUser _user = OurUser(); //* Local object, only for this function
 
     try {
@@ -53,11 +53,11 @@ class CurrentUser extends ChangeNotifier {
           email: email, password: password);
       print(_authResult.user);
 
-      _user.uid = _authResult.user.uid;
+      _user.uid = _authResult.user!.uid;
       _user.fullName = fullName;
-      _user.email = _authResult.user.email;
+      _user.email = _authResult.user!.email;
       _user.status = status;
-      String _result = await OurDatabase().createUser(_user);
+      String? _result = await OurDatabase().createUser(_user);
       if (_result == "success") {
         retValue = "success";
       }
@@ -70,28 +70,28 @@ class CurrentUser extends ChangeNotifier {
     return retValue;
   }
 
-  Future<String> logInUser(String email, String password) async {
-    String retValue = "error";
+  Future<String?> logInUser(String email, String password) async {
+    String? retValue = "error";
 
     try {
       UserCredential _authResult = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       print(_authResult);
 
-      _currentUser = await OurDatabase().getUserInfo(_authResult.user.uid);
+      _currentUser = await OurDatabase().getUserInfo(_authResult.user!.uid);
       if (_currentUser != null) {
         retValue = "success";
         print(_currentUser);
       }
     } catch (e) {
-      retValue = e.message;
+      retValue = e.toString();
     }
 
     return retValue;
   }
 
-  Future<String> logInUserWithGoogle() async {
-    String retValue = "error";
+  Future<String?> logInUserWithGoogle(BuildContext context) async {
+    String? retValue = "error";
 
     GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: [
@@ -102,33 +102,41 @@ class CurrentUser extends ChangeNotifier {
     OurUser _user = OurUser();
 
     try {
-      GoogleSignInAccount _googleUser = await _googleSignIn.signIn();
-      GoogleSignInAuthentication _googleAuth = await _googleUser.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
-          idToken: _googleAuth.idToken, accessToken: _googleAuth.accessToken);
+      GoogleSignInAccount? _googleUser =
+          await _googleSignIn.signIn().catchError((onError) {
+        Get.snackbar("Error encountered", onError.toString());
+        retValue = "Error";
+      });
+      if (_googleUser != null) {
+        final GoogleSignInAuthentication? _googleAuth =
+            await _googleUser.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+            idToken: _googleAuth!.idToken,
+            accessToken: _googleAuth.accessToken);
+        UserCredential _authResult =
+            await _auth.signInWithCredential(credential);
+        _currentUser.uid = _authResult.user!.uid;
+        _currentUser.email = _authResult.user!.email;
 
-      UserCredential _authResult = await _auth.signInWithCredential(credential);
-      _currentUser.uid = _authResult.user.uid;
-      _currentUser.email = _authResult.user.email;
-
-      if (_authResult.additionalUserInfo.isNewUser) {
-        _user.uid = _authResult.user.uid;
-        _user.email = _authResult.user.email;
-        _user.fullName = _authResult.user.displayName;
-        _user.status = "By Google, ask again. Code: G123";
-        OurDatabase().createUser(_user);
-      }
-      _currentUser = await OurDatabase().getUserInfo(_authResult.user.uid);
-      if (_currentUser != null) {
-        retValue = "success";
+        if (_authResult.additionalUserInfo!.isNewUser) {
+          _user.uid = _authResult.user!.uid;
+          _user.email = _authResult.user!.email;
+          _user.fullName = _authResult.user!.displayName;
+          _user.status = "By Google, ask again. Code: G123";
+          OurDatabase().createUser(_user);
+        }
+        _currentUser = await OurDatabase().getUserInfo(_authResult.user!.uid);
+        if (_currentUser != null) {
+          retValue = "success";
+        }
       }
     } catch (e) {
-      retValue = e.message;
+      Get.snackbar("Error encountered", e.toString());
+      retValue = "Error";
     }
     return retValue;
   }
 }
 /*
 Todo: Show a loading screen after people click LogIn and CreateAccount
-
 */ 

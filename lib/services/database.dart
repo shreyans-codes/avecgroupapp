@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class OurDatabase {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> createUser(OurUser newUser) async {
-    String retVal = "error";
+  Future<String?> createUser(OurUser newUser) async {
+    String? retVal = "error";
 
     try {
       await _firestore.collection("users").doc(newUser.uid).set({
@@ -17,7 +17,7 @@ class OurDatabase {
       });
       retVal = "success";
     } catch (e) {
-      retVal = e.message;
+      retVal = e.toString();
     }
     return retVal;
   }
@@ -29,11 +29,11 @@ class OurDatabase {
       DocumentSnapshot<Map<String, dynamic>> _docSnapshot =
           await _firestore.collection('users').doc(uid).get();
       retUser.uid = uid;
-      retUser.fullName = _docSnapshot.data()['fullName'];
-      retUser.email = _docSnapshot.data()['email'];
-      retUser.status = _docSnapshot.data()['status'];
-      retUser.accountCreated = _docSnapshot.data()['accountCreated'];
-      retUser.groupId = _docSnapshot.data()['groupId'];
+      retUser.fullName = _docSnapshot.data()!['fullName'];
+      retUser.email = _docSnapshot.data()!['email'];
+      retUser.status = _docSnapshot.data()!['status'];
+      retUser.accountCreated = _docSnapshot.data()!['accountCreated'];
+      retUser.groupId = _docSnapshot.data()!['groupId'];
       //retUser.groups = _docSnapshot.data()['groups'];
     } catch (e) {
       print(e);
@@ -41,11 +41,11 @@ class OurDatabase {
     return retUser;
   }
 
-  static String groupId;
-  Future<String> createGroup(
-      {String groupName, String userId, String userName}) async {
-    String retVal = "error";
-    List<String> members = List();
+  static String? groupId;
+  Future<String?> createGroup(
+      {String? groupName, String? userId, String? userName}) async {
+    String? retVal = "error";
+    List<String?> members = [];
     try {
       members.add(userId);
       DocumentReference _docReference =
@@ -63,14 +63,14 @@ class OurDatabase {
       groupId = _docReference.id.toString();
       retVal = "success";
     } catch (e) {
-      retVal = e.message;
+      retVal = e.toString();
     }
     return retVal;
   }
 
-  static String groupJoinId;
-  Future<String> joinGroup({String groupId, String userId}) async {
-    String retVal = "error";
+  static String? groupJoinId;
+  Future<String?> joinGroup({String? groupId, String? userId}) async {
+    String? retVal = "error";
 
     try {
       await _firestore.collection("group").doc(groupId).update({
@@ -86,7 +86,7 @@ class OurDatabase {
           groupId; // * This is so that we can add the Group's detail in the group home screen
       retVal = "success";
     } catch (e) {
-      retVal = e.message;
+      retVal = e.toString();
     }
     return retVal;
   }

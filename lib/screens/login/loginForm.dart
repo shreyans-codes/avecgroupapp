@@ -5,6 +5,7 @@ import 'package:avecgroupapp/ui/textStyles.dart';
 import 'package:avecgroupapp/widgets/ourContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -24,21 +25,25 @@ class _OurLoginFormState extends State<OurLoginForm> {
   TextEditingController _passwordController = TextEditingController();
 
   void _logInUser(
-      {@required LoginType type,
-      String email,
-      String password,
-      BuildContext context}) async {
+      {required LoginType type,
+      String? email,
+      String? password,
+      required BuildContext context}) async {
     //* Instance of Current User
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
-    String _returnString;
+    String? _returnString;
 
     //* Based on "type" we call different functions
     switch (type) {
       case LoginType.email:
-        _returnString = await _currentUser.logInUser(email, password);
+        _returnString = await _currentUser.logInUser(email!, password!);
         break;
       case LoginType.google:
-        _returnString = await _currentUser.logInUserWithGoogle();
+        _returnString = await _currentUser
+            .logInUserWithGoogle(context)
+            .catchError((onError) {
+          Get.snackbar("Error encountered", onError.toString());
+        });
         break;
       default:
     }
@@ -51,9 +56,8 @@ class _OurLoginFormState extends State<OurLoginForm> {
                 )));
       }
     } catch (e) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text("Incorrect LogIn info"),
-          duration: Duration(seconds: 2)));
+      final snackbar = SnackBar(content: Text(e.toString()));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
     }
   }
 
@@ -107,10 +111,8 @@ class _OurLoginFormState extends State<OurLoginForm> {
                       password: _passwordController.text,
                       context: context);
                 } else {
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    content: Text("Please enter something in the fields"),
-                    duration: Duration(seconds: 2),
-                  ));
+                  Get.snackbar("Error", "Please enter something in the fields",
+                      duration: Duration(seconds: 2));
                 }
               },
               child: Text(
@@ -123,18 +125,19 @@ class _OurLoginFormState extends State<OurLoginForm> {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(35.0, 8.0, 35.0, 8.0),
-            child: OutlineButton.icon(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
+            child: OutlinedButton.icon(
+              style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                backgroundColor: globalPurple,
+                //splashColor: globalPurple,
               ),
-              color: globalPurple,
-              splashColor: globalPurple,
               onPressed: () {
                 _logInUser(type: LoginType.google, context: context);
               },
               icon: Icon(
                 FontAwesomeIcons.google,
-                color: globalPurple,
               ),
               label: Text(
                 "Login with Google",

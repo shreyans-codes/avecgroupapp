@@ -16,7 +16,7 @@ void sendMessage(String text, BuildContext context) async {
   messageModel.userName = _currentUser.getCurrentUser.fullName;
   messageModel.toGroup = _currentUser.getCurrentUser.groupId;
 
-  String result =
+  String? result =
       await MessageDatabase().writeMessage(messageModel: messageModel);
   if (result == "success") {
     GroupChatPage.controller.clear();
@@ -50,7 +50,7 @@ class GroupChatPage extends StatelessWidget {
                 if (!snapshot.hasData) {
                   return CupertinoActivityIndicator();
                 }
-                final messageList = snapshot.data.docs;
+                final messageList = snapshot.data!.docs;
                 List<MessageType1> messageBubbleList = [];
                 for (var message in messageList) {
                   final messageText = message.data()['text'];
@@ -72,7 +72,7 @@ class GroupChatPage extends StatelessWidget {
                 );
               },
             ),
-            TypeBox(context, controller),
+            typeBox(context, controller),
           ],
         ),
       ),
@@ -80,7 +80,7 @@ class GroupChatPage extends StatelessWidget {
   }
 }
 
-Widget TypeBox(BuildContext context, TextEditingController messageController) {
+Widget typeBox(BuildContext context, TextEditingController messageController) {
   return TextFormField(
     decoration: InputDecoration(
       border: OutlineInputBorder(
@@ -100,9 +100,9 @@ Widget TypeBox(BuildContext context, TextEditingController messageController) {
 }
 
 class MessageType1 extends StatelessWidget {
-  String sender;
-  String message;
-  Timestamp timestamp;
+  String? sender;
+  String? message;
+  Timestamp? timestamp;
   MessageType1({this.message, this.sender, this.timestamp});
 
   String convertTime(DateTime timestamp) {
@@ -124,17 +124,17 @@ class MessageType1 extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  sender,
+                  sender!,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1
+                      .bodyText1!
                       .copyWith(fontSize: 20),
                 ),
               ),
-              MessageBox(message, context),
+              messageBox(message!, context),
             ],
           ),
-          Text(convertTime(timestamp.toDate()))
+          Text(convertTime(timestamp!.toDate()))
           // RoundedContainerWithBorder(
           //   child: Padding(
           //     padding: const EdgeInsets.all(8.0),
@@ -150,7 +150,7 @@ class MessageType1 extends StatelessWidget {
   }
 }
 
-Widget MessageBox(String text, BuildContext context) {
+Widget messageBox(String text, BuildContext context) {
   return Container(
     decoration: BoxDecoration(
       color: subGrey,
@@ -178,7 +178,7 @@ Widget MessageBox(String text, BuildContext context) {
 }
 
 class RoundedContainerWithBorder extends StatelessWidget {
-  Widget child;
+  Widget? child;
 
   RoundedContainerWithBorder({this.child});
 

@@ -28,10 +28,10 @@ class MyApp extends StatelessWidget {
       child: ChangeNotifierProvider(
         create: (_) => ThemeNotifier(),
         child: Consumer<ThemeNotifier>(
-          builder: (BuildContext context, ThemeNotifier value, Widget child) {
+          builder: (BuildContext context, ThemeNotifier value, Widget? child) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              theme: value.isDarkTheme ? darkTheme : lightTheme,
+              theme: value.isDarkTheme! ? darkTheme : lightTheme,
               home: OurRoot(),
               routes: {
                 OurRoutes.rootId: (context) => OurRoot(),

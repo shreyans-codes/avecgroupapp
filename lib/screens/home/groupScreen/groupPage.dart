@@ -63,7 +63,7 @@ Widget groupField(BuildContext context) {
                     "Amit: Check my new painting",
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1
+                        .subtitle1!
                         .copyWith(fontSize: 12.0),
                   ),
                 ],

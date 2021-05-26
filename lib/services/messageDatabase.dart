@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class MessageDatabase {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> writeMessage({MessageModel messageModel}) async {
-    String retVal = "error";
+  Future<String?> writeMessage({required MessageModel messageModel}) async {
+    String? retVal = "error";
     try {
       await _firestore.collection("message").add({
         'senderId': messageModel.userId,
@@ -16,7 +16,7 @@ class MessageDatabase {
       });
       retVal = "success";
     } catch (e) {
-      retVal = e.message;
+      retVal = e.toString();
     }
     return retVal;
   }

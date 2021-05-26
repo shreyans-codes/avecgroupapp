@@ -14,7 +14,7 @@ class JoinGroup extends StatelessWidget {
 
   void _joinGroup(BuildContext context, String groupId) async {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
-    String _result = await OurDatabase()
+    String? _result = await OurDatabase()
         .joinGroup(groupId: groupId, userId: _currentUser.getCurrentUser.uid);
     if (_result == "success") {
       _currentUser.getCurrentUser.groupId = OurDatabase.groupId;
@@ -95,18 +95,20 @@ class JoinGroup extends StatelessWidget {
                     SizedBox(
                       height: 25,
                     ),
-                    FlatButton(
-                      padding: EdgeInsets.fromLTRB(85, 10, 85, 10),
+                    TextButton(
                       onPressed: () =>
                           _joinGroup(context, _codeController.text),
                       child: Text(
                         "Join",
                         style: jcgButton,
                       ),
-                      color: themeBlueGreen,
-                      splashColor: globalPurple,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
+                      style: TextButton.styleFrom(
+                        backgroundColor: themeBlueGreen,
+                        padding: EdgeInsets.fromLTRB(85, 10, 85, 10),
+                        //splashColor: globalPurple,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                       ),
                     )
                   ],
