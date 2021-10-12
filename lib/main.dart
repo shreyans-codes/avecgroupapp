@@ -52,3 +52,10 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+/*
+TODO: 
+* 1. Button Splash
+* 2. Better Login Screen
+* 3. Recheck Firebase shit
+ */

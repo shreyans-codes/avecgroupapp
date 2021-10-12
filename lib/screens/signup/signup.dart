@@ -23,7 +23,8 @@ class SignUp extends StatelessWidget {
                       child: Center(
                         child: CircleAvatar(
                           radius: 60.0,
-                          backgroundImage: AssetImage("assets/images/jaipur.jpg"),
+                          backgroundImage:
+                              AssetImage("assets/images/Avec/3.png"),
                         ),
                       ),
                     ),

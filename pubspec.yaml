@@ -48,6 +48,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/jaipur.jpg
+    - assets/images/Avec/
     - assets/svg/group_hangout.svg
     - assets/svg/social_friends.svg
     - assets/svg/team_page.svg

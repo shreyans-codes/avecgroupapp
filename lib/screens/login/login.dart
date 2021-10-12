@@ -23,7 +23,7 @@ class LogIn extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 60.0,
                       backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage("assets/images/jaipur.jpg"),
+                      backgroundImage: AssetImage("assets/images/Avec/4.png"),
                     ),
                   )),
               Expanded(

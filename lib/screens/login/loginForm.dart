@@ -130,7 +130,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
-                backgroundColor: globalPurple,
+                backgroundColor: Colors.white,
                 //splashColor: globalPurple,
               ),
               onPressed: () {
